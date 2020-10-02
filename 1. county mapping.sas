@@ -7,7 +7,9 @@ libname prod 'C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\Christmas Eve\O
 
 libname dan 'C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\Christmas Eve\Ongoing Production';
 
-libname layla 'C:\Users\panyue\Box\Yue Pan from old laptop 2015\DR FEASTER\Healing Communities\HCS Denominator\Layla';
+/*libname layla 'C:\Users\panyue\Box\Yue Pan from old laptop 2015\DR FEASTER\Healing Communities\HCS Denominator\Layla';*/
+libname partial "C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\Denominators\Layla";
+libname wonder "C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\Denominators\CDC\Output Data";
 
 
 
