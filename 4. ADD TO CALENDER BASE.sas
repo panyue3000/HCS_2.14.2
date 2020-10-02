@@ -133,5 +133,6 @@ outfile= %TSLIT (C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\2.14.2 I
 replace;
 run;
 
-%mend csv_export;
-%csv_export(IQVIA_FINAL_EXCEL_&DATE.);
+%MEND CSV_EXPORT;
+%CSV_EXPORT(IQVIA_FINAL_EXCEL_&DATE.);
+
