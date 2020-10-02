@@ -103,3 +103,35 @@ DATA IQVIA_FINAL_&DATE.;
 SET IQVIA_FINAL_&DATE._0;
 IF YEAR=2020 AND QUARTER=3 THEN DELETE;
 RUN;
+
+/*CHECK FOR EVEN NUMBERS ACROSS COUNTIES*/
+PROC FREQ DATA=IQVIA_FINAL_EXCEL_&DATE.;
+RUN;
+
+
+/*1 DELIVERY FILES TO HCS DELIVERIES*/
+
+/*IQVIA_FINAL_&DATE.*/
+%macro csv_export (DATA);
+
+proc export data=&DATA. dbms=CSV
+outfile= %TSLIT (C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\2.14.2 IQVIA\HCS deliveries\&DATA..CSV)
+replace;
+run;
+
+%mend csv_export;
+%csv_export(IQVIA_FINAL_&DATE.);
+
+
+/*1 DELIVERY FILES TO INTERNVAL REVIEW FOR EXCEL VISUALIZATION */
+
+/*IQVIA_FINAL_EXCEL_&DATE.*/
+%macro csv_export (DATA);
+
+proc export data=&DATA. dbms=CSV
+outfile= %TSLIT (C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\2.14.2 IQVIA\Export\&DATA..CSV)
+replace;
+run;
+
+%mend csv_export;
+%csv_export(IQVIA_FINAL_EXCEL_&DATE.);
