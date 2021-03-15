@@ -4,7 +4,7 @@ data redivis_export;
 	SPECIFY THE PATH TO YOUR DOWNLOADED CSV BELOW:
 */
 
-infile 'C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\2.14.2 IQVIA\Import\V2.11\Projected_Naloxone_Distributions.csv' 
+infile 'C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\2.14.2 IQVIA\Import\V2.12\Projected_Naloxone_Distributions.csv' 
 /*infile 'C:\Users\panyu\Box\Yue Pan from old laptop 2015\DR FEASTER\Healing Communities\2.14.2 IQVIA\Projected_Naloxone_Distributions.csv' */
 
 
