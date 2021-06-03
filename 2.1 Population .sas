@@ -70,13 +70,16 @@ RUN;
 
 
 DATA POPEST_0;
-SET POPEST_LAYLA_1 POPEST_2019 POPEST_2020 POPEST_2021
+SET POPEST_LAYLA_1 POPEST_2017 POPEST_2019 POPEST_2020 POPEST_2021
     WONDER.popge18_county(RENAME=(SUM_POP=POP)) /*UP TO 2019*/
 	WONDER_2020(RENAME=(SUM_POP=POP)) 
 	WONDER_2021(RENAME=(SUM_POP=POP)) ;
 ;
 RUN;
 
+proc freq data=popest_0;
+tables county * year;
+run;
 
 
 /***********************************************************************************************************************/
@@ -138,7 +141,9 @@ RUN;
 
 
 /*COMBNIE BOTH*/
-DATA POPEST (RENAME=(POPNEW=POP) drop=poppart);
+DATA POPEST 
+(RENAME=(POPNEW=POP) drop=poppart)
+;
 LENGTH COUNTY $ 50;
 FORMAT COUNTY $50.;
 SET POPEST_3 POPEST_1;
