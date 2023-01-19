@@ -108,6 +108,55 @@ PROC SQL;
 		  "This data is from IQVIA DATASET_&IQVIA_VERSION." AS NOTES,
 		  '' AS STRATIFICATION
 
+      FROM IQVIA_FINAL_&DATE._00 t1
+      GROUP BY t1.ReporterId,
+	  	       calculated YEAR
+	  order by t1.ReporterId,
+	  	       calculated YEAR
+
+	;
+QUIT;
+
+DATA IQVIA_FINAL_&DATE._02;
+SET IQVIA_FINAL_&DATE._01;
+
+/*0 remove year 2023 if we are still in 2022*/
+if year =. then delete;
+month=.;
+rename sum_numerator=numerator;
+IF YEAR=2023 THEN DELETE;
+
+/*1.)	for the Fiscal year we need to put the year in a 2 year format: */
+if Year eq 2023 then year=20222023;
+if Year eq 2022 then year=20212022;
+if Year eq 2021 then year=20202021;
+if Year eq 2020 then year=20192020;
+if Year eq 2019 then year=20182019;
+if Year eq 2018 then year=20172018;
+if Year eq 2017 then year=20162017;
+
+/*2.)	RTI does not recognize our additional areas, so for RTI we need to skip those recordids*/
+/*if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;*/
+
+drop date;
+RUN;
+
+data IQVIA_FY;
+set IQVIA_FINAL_&DATE._02;
+by reporterid year;
+if first.year;
+run;
+
+
+data IQVIA_FINAL_&DATE._0;
+set IQVIA_FY IQVIA_FINAL_&DATE._00;
+if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;
+
+run;
+
+
+
+
 /*DELETE QUARTER IF MONTH NOT REACH TO THE LAST MONTH OF THE QUARTER*/
 
 
