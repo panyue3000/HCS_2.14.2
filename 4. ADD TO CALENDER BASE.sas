@@ -136,7 +136,7 @@ if Year eq 2018 then year=20172018;
 if Year eq 2017 then year=20162017;
 
 /*2.)	RTI does not recognize our additional areas, so for RTI we need to skip those recordids*/
-if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;
+/*if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;*/
 
 drop date;
 RUN;
@@ -150,6 +150,8 @@ run;
 
 data IQVIA_FINAL_&DATE._0;
 set IQVIA_FY IQVIA_FINAL_&DATE._00;
+if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;
+
 run;
 
 
@@ -169,10 +171,14 @@ SET IQVIA_FINAL_&DATE._0;
 IF YEAR=2022 AND QUARTER=4 THEN DELETE;
 IF YEAR=2022 AND QUARTER=. AND MONTH=. THEN DELETE;
 
+/*for fiscal year check*/
+IF YEAR=20212022 THEN DELETE;
+
+
 RUN;
 
 /*CHECK FOR EVEN NUMBERS ACROSS COUNTIES*/
-PROC FREQ DATA=IQVIA_FINAL_EXCEL_&DATE.;
+PROC FREQ DATA=IQVIA_FINAL_&DATE.;
 RUN;
 
 
