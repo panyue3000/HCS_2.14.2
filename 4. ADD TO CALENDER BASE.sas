@@ -98,10 +98,11 @@ PROC SQL;
 		  t1.ReporterId,
 		  (SUM(t1.numerator)) FORMAT=BEST32. AS sum_numerator,
 		  t1.denominator,
-		  month(intnx('month', mdy(t1.month, 01, t1.year), 7)) as month,
+		  t1.month as oldmonth,
+		  month(intnx('month', mdy(t1.month, 01, t1.year), 6)) as month,
 		  . as quarter,
-		  year(intnx('month', mdy(t1.month, 01, t1.year), 7)) as year,
-		  intnx('month', mdy(t1.month, 01, t1.year), 7) as date format=mmddyy10.,
+		  year(intnx('month', mdy(t1.month, 01, t1.year), 6)) as year,
+		  intnx('month', mdy(t1.month, 01, t1.year), 6) as date format=mmddyy10.,
           /* SUM_of_PROJECTED_TRX */
 		  		  CASE WHEN T1.NUMERATOR EQ . THEN 0
 		       ELSE 0 END AS IsSuppressed,
@@ -138,7 +139,7 @@ if Year eq 2017 then year=20162017;
 /*2.)	RTI does not recognize our additional areas, so for RTI we need to skip those recordids*/
 /*if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;*/
 
-drop date;
+drop date oldmonth;
 RUN;
 
 data IQVIA_FY;
@@ -147,7 +148,7 @@ by reporterid year;
 if first.year;
 run;
 
-
+ 
 data IQVIA_FINAL_&DATE._0;
 set IQVIA_FY IQVIA_FINAL_&DATE._00;
 if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;
@@ -172,7 +173,7 @@ IF YEAR=2022 AND QUARTER=4 THEN DELETE;
 IF YEAR=2022 AND QUARTER=. AND MONTH=. THEN DELETE;
 
 /*for fiscal year check*/
-IF YEAR=20212022 THEN DELETE;
+IF YEAR=20222023 THEN DELETE;
 
 
 RUN;
