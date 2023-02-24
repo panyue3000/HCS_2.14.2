@@ -14,7 +14,7 @@ libname wonder "C:\Users\panyue\Box\1 Healing Communities\DATA_NYS\PAN\Denominat
 
 
 PROC FREQ DATA=redivis_export;
-TABLES COUNTY_TERRITORY;
+TABLES COUNTY;
 RUN;
 
 /*DATA REPORTER_LIST_0;*/
