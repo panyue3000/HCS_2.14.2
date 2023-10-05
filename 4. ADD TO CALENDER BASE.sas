@@ -125,7 +125,7 @@ SET IQVIA_FINAL_&DATE._01;
 if year =. then delete;
 month=.;
 rename sum_numerator=numerator;
-IF YEAR=2023 THEN DELETE;
+
 
 /*1.)	for the Fiscal year we need to put the year in a 2 year format: */
 if Year eq 2023 then year=20222023;
@@ -139,8 +139,13 @@ if Year eq 2017 then year=20162017;
 /*2.)	RTI does not recognize our additional areas, so for RTI we need to skip those recordids*/
 /*if reporterid in ('0368','0369','0370','0371','0372','0373') then delete;*/
 
+IF YEAR=2023 THEN DELETE;
 drop date oldmonth;
 RUN;
+
+proc sort data=IQVIA_FINAL_&DATE._02;
+by reporterid year;
+run;
 
 data IQVIA_FY;
 set IQVIA_FINAL_&DATE._02;
@@ -163,17 +168,20 @@ run;
 
 DATA IQVIA_FINAL_EXCEL_&DATE.;
 SET IQVIA_FINAL_EXCEL_&DATE._0;
-IF YEAR=2023 AND QUARTER=2 THEN DELETE;
+IF YEAR=2023 AND QUARTER=3 THEN DELETE;
 IF YEAR=2023 AND QUARTER=. AND MONTH=. THEN DELETE;
 RUN;
 
 DATA IQVIA_FINAL_&DATE.;
 SET IQVIA_FINAL_&DATE._0;
-IF YEAR=2023 AND QUARTER=2 THEN DELETE;
+IF YEAR=2023 AND QUARTER=3 THEN DELETE;
 IF YEAR=2023 AND QUARTER=. AND MONTH=. THEN DELETE;
 
-/*for fiscal year check*/
-IF YEAR=20222023 THEN DELETE;
+/*for fiscal year check rubic if pass 062023 (fiscal is 06+6 so 122023) then 20222023 is avilable */
+IF YEAR=20232024 THEN DELETE;
+
+/*for regular year check, if calendar year is avilable*/
+IF YEAR=2024 THEN DELETE;
 
 
 RUN;
