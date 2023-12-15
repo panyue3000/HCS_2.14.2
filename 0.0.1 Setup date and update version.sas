@@ -2,8 +2,8 @@
 
 /*SET UP DATE AND UPDATE VERSION */
 
-%LET DATE=1123;
-%let IQVIA_VERSION= V4.10;
+%LET DATE=1223;
+%let IQVIA_VERSION= V4.11;
 
 
 /*check date*/
